@@ -2,7 +2,7 @@ import { IBoardState } from "@/domain/IBoardState"
 
 export const shuffle = (size: number, bombsQty: number) => {
     const board: IBoardState = {
-        cells: [ Array(size).keys() ].map(x => [ Array(size).keys() ].map(y => ({
+        cells: [ ...Array(size).keys() ].map(x => [ ...Array(size).keys() ].map(y => ({
             isOpen: false,
             isMarked: false,
             isBomb: false,
@@ -24,6 +24,7 @@ export const shuffle = (size: number, bombsQty: number) => {
         }
 
         cell.isBomb = true;
+        bombsPlaced++;
 
         const affectedCells = [
             confirmBoardedValue(size, x - 1),
