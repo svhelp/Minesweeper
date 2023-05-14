@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { BaseCell } from "../Cell.styles";
 
 interface DebugBombCellProps {
     isBomb: boolean;
@@ -16,12 +17,6 @@ interface DebugBombsAroundCellProps {
     isBomb: boolean;
     bombsAround: number;
 }
-
-const BaseCell = css`
-    border: 1px solid black;
-    height: 25px;
-    width: 25px;
-`;
 
 export const DebugBombCell = styled.div<DebugBombCellProps> `
     ${BaseCell}
@@ -50,11 +45,3 @@ export const DebugBombAroundCell = styled.div<DebugBombsAroundCellProps> `
         content: "${({ isBomb, bombsAround }) => !!bombsAround && !isBomb && bombsAround}";
     }
 `;
-
-export const DebugBoardsContainer = styled.div`
-    display: flex;
-
-    > div {
-        margin: 16px;
-    }
-`

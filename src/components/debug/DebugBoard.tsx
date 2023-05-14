@@ -1,5 +1,6 @@
 import { IBoardState } from "@/domain/IBoardState";
 import { DebugBoardCell } from "./DebugBoardCell";
+import { BoardRow } from "../Board.styles";
 
 export enum DebugBoardType {
     Bomb,
@@ -21,14 +22,11 @@ export const DebugBoard = ({board, type}: DebugBoard) => {
     return (
         <div>
             {board.cells.map(row => (
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row"
-                }}>
+                <BoardRow>
                     {row.map(cell => (
                         <DebugBoardCell cell={cell} type={type} />)
                     )}
-                </div>
+                </BoardRow>
             ))}
         </div>
     );

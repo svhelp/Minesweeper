@@ -1,11 +1,12 @@
 import { ICell } from "@/domain/ICell";
-import { DebugBombCell, DebugOpenedCell, DebugMarkedCell, DebugBombAroundCell } from "./DebugBoard.styles";
+import { DebugBombCell, DebugOpenedCell, DebugMarkedCell, DebugBombAroundCell } from "./DebugBoardCell.styles";
 import { DebugBoardType } from "./DebugBoard";
 
 interface IDebugBoardCellProps {
     cell: ICell;
     type: DebugBoardType;
 }
+
 export const DebugBoardCell = ({ cell, type }: IDebugBoardCellProps) => {
     if (type === DebugBoardType.Bomb) {
         return (
