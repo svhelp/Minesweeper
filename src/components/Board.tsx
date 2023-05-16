@@ -17,7 +17,7 @@ export const Board = ({ board, onOpenCell }: IBoardProps) => {
             {board?.cells.map((row, x) => (
                 <BoardRow>
                     {row.map((cell, y) => 
-                        cell.isOpen
+                        board.openedCells.includes(cell)
                             ? <OpenedCell isBomb={cell.isBomb} bombsAround={cell.bombsAround} />
                             : <ClosedCell onClick={() => onOpenCell(x, y)} />
                     )}

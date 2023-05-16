@@ -1,23 +1,16 @@
-import { IBoardState } from "@/domain/IBoardState"
+import { ICell } from "@/domain/ICell";
 
 export const shuffle = (size: number, bombsQty: number) => {
-    const board: IBoardState = {
-        cells: [ ...Array(size).keys() ].map(x => [ ...Array(size).keys() ].map(y => ({
-            isOpen: false,
-            isMarked: false,
+    const cells = [ ...Array(size).keys() ].map(x => [ ...Array(size).keys() ].map(y => ({
             isBomb: false,
             bombsAround: 0,
-        })))
-    }
-
-    const maximumBombs = size * size / 10;
-    const bombsQtyConfirmed = bombsQty < maximumBombs ? bombsQty : maximumBombs;
+        }) as ICell))
 
     let bombsPlaced = 0;
 
-    while (bombsPlaced < bombsQtyConfirmed){
+    while (bombsPlaced < bombsQty){
         const [ x, y ] = getRandomCell(size);
-        const cell = board.cells[x][y];
+        const cell = cells[x][y];
 
         if (cell.isBomb){
             continue;
@@ -35,12 +28,12 @@ export const shuffle = (size: number, bombsQty: number) => {
 
         for (let x = affectedCells[0]; x < affectedCells[1] + 1; x++){
             for (let y = affectedCells[2]; y < affectedCells[3] + 1; y++){
-                board.cells[x][y].bombsAround++;
+                cells[x][y].bombsAround++;
             }
         }
     }
 
-    return board;
+    return cells;
 }
 
 const confirmBoardedValue = (size: number, value: number) => {

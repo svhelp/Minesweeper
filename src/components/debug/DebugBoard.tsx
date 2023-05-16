@@ -24,7 +24,7 @@ export const DebugBoard = ({board, type}: DebugBoard) => {
             {board.cells.map(row => (
                 <BoardRow>
                     {row.map(cell => (
-                        <DebugBoardCell cell={cell} type={type} />)
+                        <DebugBoardCell board={board} cell={cell} type={type} />)
                     )}
                 </BoardRow>
             ))}

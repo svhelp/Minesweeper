@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { DebugBoardsContainer, MainContainer } from "./GameContainer.styles";
 import { Board } from "./Board";
 import { DebugBoard, DebugBoardType } from "./debug/DebugBoard";
+import { createBoard } from "@/features/initializator";
+import { onActivateCell } from "@/features/activator";
 
 interface IGameContainerProps {
 
@@ -15,12 +17,12 @@ export const GameContainer = (props: IGameContainerProps) => {
     const [ board, setBoard ] = useState<IBoardState | undefined>(undefined);
     
     useEffect(() => {
-        const initBoard = shuffle(DefaultBoardSize, DefaultBobmsQty);
+        const initBoard = createBoard(DefaultBoardSize, DefaultBobmsQty);
         setBoard(initBoard);
     }, []);
 
     const restart = () => {
-        const initBoard = shuffle(DefaultBoardSize, DefaultBobmsQty);
+        const initBoard = createBoard(DefaultBoardSize, DefaultBobmsQty);
         setBoard(initBoard);
     }
 
@@ -29,18 +31,26 @@ export const GameContainer = (props: IGameContainerProps) => {
             return;
         }
 
-        const initBoard: IBoardState = { ...board };
-        
-        initBoard.cells[x][y] = {
-            ...initBoard.cells[x][y],
-            isOpen: true,
-        };
+        const patch = onActivateCell(board, x, y);
 
-        setBoard(initBoard);
+        setBoard({
+            ...board,
+            ...patch
+        });
     }
 
     return (
         <MainContainer>
+            <div>
+                <span>State: </span>
+                <span>{board?.state}</span>
+            </div>
+            
+            <div>
+                <span>Result: </span>
+                <span>{board?.result}</span>
+            </div>
+
             <Board
                 board={board}
                 onOpenCell={onOpenCell}
