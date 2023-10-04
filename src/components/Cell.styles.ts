@@ -6,27 +6,31 @@ interface OpenedCellProps {
 }
 
 export const BaseCell = css`
-    border: 1px solid black;
     height: 25px;
     width: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid black;
+
+    img {
+        height: 20px;
+        width: 20px;
+    }
 `;
 
-export const ClosedCell = styled.div`
+export const ClosedContainer = styled.div`
     ${BaseCell}
 
     background: white;
-`
-
-export const MarkedCell = styled.div`
-    ${BaseCell}
-
-    background: green;
-`
+`;
 
 export const OpenedCell = styled.div<OpenedCellProps>`
     ${BaseCell}
 
-    background: ${({ isBomb }) => isBomb ? "red" : "grey"};
+    background: #ddd;
     
     ::after {
         content: "${({ isBomb, bombsAround }) => !!bombsAround && !isBomb && bombsAround}";
