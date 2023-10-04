@@ -3,12 +3,11 @@
 import { IBoardState } from "@/domain/IBoardState";
 import { DefaultBoardSize, DefaultBobmsQty, handleMarkCell } from "@/features";
 import { useEffect, useState } from "react";
-import { DebugBoardsContainer, MainContainer } from "./GameContainer.styles";
+import { MainContainer } from "./GameContainer.styles";
 import { Board } from "./Board";
-import { DebugBoard, DebugBoardType } from "./debug/DebugBoard";
 import { createBoard } from "@/features/initializator";
 import { onActivateCell } from "@/features/activator";
-import { ICell } from "@/domain/ICell";
+import { DebugPanel } from "./debug/DebugPanel";
 
 interface IGameContainerProps {
 
@@ -75,13 +74,7 @@ export const GameContainer = (props: IGameContainerProps) => {
                 <button onClick={restart}>Refresh</button>
             </div>
             
-            <DebugBoardsContainer>
-                <DebugBoard board={board} type={DebugBoardType.Bomb} />
-                <DebugBoard board={board} type={DebugBoardType.BobmsAround} />
-                <DebugBoard board={board} type={DebugBoardType.Opened} />
-                <DebugBoard board={board} type={DebugBoardType.Marked} />
-            </DebugBoardsContainer>
+            <DebugPanel board={board} />
         </MainContainer>
     );
 }
-

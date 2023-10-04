@@ -5,11 +5,3 @@ export const MainContainer = styled.div`
     flex-direction: column;
     align-items: center;
 `
-
-export const DebugBoardsContainer = styled.div`
-    display: flex;
-
-    > div {
-        margin: 16px;
-    }
-`
