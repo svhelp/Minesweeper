@@ -1,13 +1,14 @@
 "use client";
 
 import { IBoardState } from "@/domain/IBoardState";
-import { DefaultBoardSize, DefaultBobmsQty, shuffle } from "@/features";
+import { DefaultBoardSize, DefaultBobmsQty, handleMarkCell } from "@/features";
 import { useEffect, useState } from "react";
 import { DebugBoardsContainer, MainContainer } from "./GameContainer.styles";
 import { Board } from "./Board";
 import { DebugBoard, DebugBoardType } from "./debug/DebugBoard";
 import { createBoard } from "@/features/initializator";
 import { onActivateCell } from "@/features/activator";
+import { ICell } from "@/domain/ICell";
 
 interface IGameContainerProps {
 
@@ -26,12 +27,25 @@ export const GameContainer = (props: IGameContainerProps) => {
         setBoard(initBoard);
     }
 
-    const onOpenCell = (x: number, y: number) => {
+    const onOpenCell = (cell: ICell) => {
         if (!board) {
             return;
         }
 
-        const patch = onActivateCell(board, x, y);
+        const patch = onActivateCell(board, cell);
+
+        setBoard({
+            ...board,
+            ...patch
+        });
+    }
+
+    const onMarkCell = (cell: ICell) => {
+        if (!board) {
+            return;
+        }
+
+        const patch = handleMarkCell(board, cell);
 
         setBoard({
             ...board,
@@ -54,6 +68,7 @@ export const GameContainer = (props: IGameContainerProps) => {
             <Board
                 board={board}
                 onOpenCell={onOpenCell}
+                onMarkCell={onMarkCell}
             />
 
             <div>

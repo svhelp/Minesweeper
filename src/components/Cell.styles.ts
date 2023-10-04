@@ -14,7 +14,13 @@ export const BaseCell = css`
 export const ClosedCell = styled.div`
     ${BaseCell}
 
-    background: "white";
+    background: white;
+`
+
+export const MarkedCell = styled.div`
+    ${BaseCell}
+
+    background: green;
 `
 
 export const OpenedCell = styled.div<OpenedCellProps>`

@@ -1,13 +1,12 @@
 import { GameResult } from "@/domain/GameResult";
 import { GameState } from "@/domain/GameState";
 import { IBoardState } from "@/domain/IBoardState";
+import { ICell } from "@/domain/ICell";
 
-export const onActivateCell = (board: IBoardState, x: number, y: number): Partial<IBoardState> | undefined => {
+export const onActivateCell = (board: IBoardState, cell: ICell): Partial<IBoardState> | undefined => {
     if (board.state === GameState.Over) {
         return;
     }
-
-    const cell = board.cells[x][y];
 
     if (board.openedCells.includes(cell)) {
         return;
