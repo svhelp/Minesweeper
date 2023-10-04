@@ -1,19 +1,20 @@
 import { GameResult } from "@/domain/GameResult";
 import { GameState } from "@/domain/GameState";
 import { IBoardState } from "@/domain/IBoardState";
-import { ICell } from "@/domain/ICell";
 
-export const handleMarkCell = (board: IBoardState, cell: ICell): Partial<IBoardState> | undefined => {
+export const handleMarkCell = (board: IBoardState, x: number, y: number): Partial<IBoardState> | undefined => {
     if (board.state === GameState.Over) {
         return;
     }
+
+    const cell = board.cells[x][y];
 
     if (board.openedCells.includes(cell)) {
         return;
     }
 
     const markedCells = board.markedCells.includes(cell)
-        ?   board.markedCells.filter(c => c !== cell)
+        ? board.markedCells.filter(c => c !== cell)
         : [ ...board.markedCells, cell ];
 
     const patch = {

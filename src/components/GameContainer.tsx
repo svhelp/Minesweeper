@@ -27,12 +27,12 @@ export const GameContainer = (props: IGameContainerProps) => {
         setBoard(initBoard);
     }
 
-    const onOpenCell = (cell: ICell) => {
+    const onOpenCell = (x: number, y: number) => {
         if (!board) {
             return;
         }
 
-        const patch = onActivateCell(board, cell);
+        const patch = onActivateCell(board, x, y);
 
         setBoard({
             ...board,
@@ -40,12 +40,12 @@ export const GameContainer = (props: IGameContainerProps) => {
         });
     }
 
-    const onMarkCell = (cell: ICell) => {
+    const onMarkCell = (x: number, y: number) => {
         if (!board) {
             return;
         }
 
-        const patch = handleMarkCell(board, cell);
+        const patch = handleMarkCell(board, x, y);
 
         setBoard({
             ...board,

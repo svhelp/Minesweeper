@@ -5,8 +5,8 @@ import { Cell } from "./Cell";
 
 interface IBoardProps {
     board?: IBoardState;
-    onOpenCell: (cell: ICell) => void;
-    onMarkCell: (cell: ICell) => void;
+    onOpenCell: (x: number, y: number) => void;
+    onMarkCell: (x: number, y: number) => void;
 }
 
 export const Board = ({ board, onOpenCell, onMarkCell }: IBoardProps) => {
@@ -18,8 +18,8 @@ export const Board = ({ board, onOpenCell, onMarkCell }: IBoardProps) => {
         <div>
             {board?.cells.map((row, x) => (
                 <BoardRow>
-                    {row.map((cell, y) => 
-                        <Cell board={board} cell={cell} onOpenCell={onOpenCell} onMarkCell={onMarkCell} />
+                    {row.map((_, y) => 
+                        <Cell board={board} x={x} y={y} onOpenCell={onOpenCell} onMarkCell={onMarkCell} />
                     )}
                 </BoardRow>
             ))}

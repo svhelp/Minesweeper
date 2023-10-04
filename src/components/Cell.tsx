@@ -1,22 +1,39 @@
 import { IBoardState } from "@/domain/IBoardState";
 import { ClosedContainer, OpenedCell } from "./Cell.styles";
 import { GameResult } from "@/domain/GameResult";
-import { ICell } from "@/domain/ICell";
 import bomb from "@/resources/bomb.png"
 import flag from "@/resources/flag.png"
 import explosion from "@/resources/explosion.png"
+import { GameState } from "@/domain/GameState";
 
 interface CellProps {
     board: IBoardState;
-    cell: ICell;
-    onOpenCell: (cell: ICell) => void;
-    onMarkCell: (cell: ICell) => void;
+    x: number;
+    y: number;
+    onOpenCell: (x: number, y: number) => void;
+    onMarkCell: (x: number, y: number) => void;
 }
 
-export const Cell = ({ board, cell, onOpenCell, onMarkCell }: CellProps) => {
+export const Cell = ({ board, x, y, onOpenCell, onMarkCell }: CellProps) => {
+    const cell = board.cells[x][y];
+
+    const onLeftClick = () => {
+        onOpenCell(x, y)
+    }
+
+    const onRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+
+        if (board.state === GameState.Over) {
+            return;
+        }
+
+        onMarkCell(x, y);
+    };
+
     if (board.openedCells.includes(cell)) {
         return (
-            <OpenedCell isBomb={cell.isBomb} bombsAround={cell.bombsAround}>
+            <OpenedCell isBomb={cell.isBomb} bombsAround={cell.bombsAround} onContextMenu={onRightClick}>
                 {cell.isBomb && <img src={explosion.src} alt="explosion" />}
             </OpenedCell>
         );
@@ -25,7 +42,7 @@ export const Cell = ({ board, cell, onOpenCell, onMarkCell }: CellProps) => {
     if (board.markedCells.includes(cell)) {
         return (
             <ClosedContainer>
-                <img src={flag.src} alt="flag" />
+                <img src={flag.src} alt="flag" onContextMenu={onRightClick} />
             </ClosedContainer>
         );
     }
@@ -33,16 +50,10 @@ export const Cell = ({ board, cell, onOpenCell, onMarkCell }: CellProps) => {
     if (board.result === GameResult.Lost && cell.isBomb) {
         return (
             <ClosedContainer>
-                <img src={bomb.src} alt="bomb" />
+                <img src={bomb.src} alt="bomb" onContextMenu={onRightClick} />
             </ClosedContainer>
         )
     }
 
-    const onRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-
-        onMarkCell(cell);
-    };
-
-    return <ClosedContainer onClick={() => onOpenCell(cell)} onContextMenu={onRightClick} />;
+    return <ClosedContainer onClick={onLeftClick} onContextMenu={onRightClick} />;
 };
