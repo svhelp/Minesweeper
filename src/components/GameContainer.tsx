@@ -1,12 +1,10 @@
 "use client";
 
 import { IBoardState } from "@/domain/IBoardState";
-import { DefaultBoardSize, DefaultBobmsQty, handleMarkCell } from "@/features";
+import { DefaultBoardSize, DefaultBobmsQty, createBoard, handleMarkCell, onActivateCell } from "@/features";
 import { useEffect, useState } from "react";
 import { MainContainer } from "./GameContainer.styles";
 import { Board } from "./Board";
-import { createBoard } from "@/features/initializator";
-import { onActivateCell } from "@/features/activator";
 import { DebugPanel } from "./debug/DebugPanel";
 
 interface IGameContainerProps {
@@ -26,12 +24,12 @@ export const GameContainer = (props: IGameContainerProps) => {
         setBoard(initBoard);
     }
 
-    const onOpenCell = (x: number, y: number) => {
+    const onCellClicked = (patchCreator: (board: IBoardState, x: number, y: number) => Partial<IBoardState> | undefined, x: number, y: number) => {
         if (!board) {
             return;
         }
 
-        const patch = onActivateCell(board, x, y);
+        const patch = patchCreator(board, x, y);
 
         setBoard({
             ...board,
@@ -39,18 +37,9 @@ export const GameContainer = (props: IGameContainerProps) => {
         });
     }
 
-    const onMarkCell = (x: number, y: number) => {
-        if (!board) {
-            return;
-        }
+    const onOpenCell = (x: number, y: number) => onCellClicked(onActivateCell, x, y);
 
-        const patch = handleMarkCell(board, x, y);
-
-        setBoard({
-            ...board,
-            ...patch
-        });
-    }
+    const onMarkCell = (x: number, y: number) => onCellClicked(handleMarkCell, x, y);
 
     return (
         <MainContainer>

@@ -1,6 +1,5 @@
 import { IBoardState } from "@/domain/IBoardState";
 import { BoardRow } from "./Board.styles";
-import { ICell } from "@/domain/ICell";
 import { Cell } from "./Cell";
 
 interface IBoardProps {
