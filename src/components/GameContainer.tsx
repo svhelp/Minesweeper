@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { MainContainer } from "./GameContainer.styles";
 import { Board } from "./Board";
 import { DebugPanel } from "./debug/DebugPanel";
+import { StatusPanel } from "./status/StatusPanel";
 
 interface IGameContainerProps {
 
@@ -43,25 +44,13 @@ export const GameContainer = (props: IGameContainerProps) => {
 
     return (
         <MainContainer>
-            <div>
-                <span>State: </span>
-                <span>{board?.state}</span>
-            </div>
-            
-            <div>
-                <span>Result: </span>
-                <span>{board?.result}</span>
-            </div>
+            <StatusPanel board={board} restart={restart} />
 
             <Board
                 board={board}
                 onOpenCell={onOpenCell}
                 onMarkCell={onMarkCell}
             />
-
-            <div>
-                <button onClick={restart}>Refresh</button>
-            </div>
             
             <DebugPanel board={board} />
         </MainContainer>

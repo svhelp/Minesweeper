@@ -13,6 +13,10 @@ export const handleMarkCell = (board: IBoardState, x: number, y: number): Partia
         return;
     }
 
+    if (board.markedCells.length === board.bombsCount && !board.markedCells.includes(cell)) {
+        return;
+    }
+
     const markedCells = board.markedCells.includes(cell)
         ? board.markedCells.filter(c => c !== cell)
         : [ ...board.markedCells, cell ];
